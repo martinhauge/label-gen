@@ -10,23 +10,31 @@
 		Template:
 		<select name="catType" id="catTypeSelection">
 			<option value="udk">UDK</option>
-			<option value="statjur">Stat/Jur</option>
-			<option value="dewey">Dewey</option>
-			<option value="other">Other</option>
+			<option value="statjur" disabled>Stat/Jur</option>
+			<option value="dewey" disabled>Dewey</option>
+			<option value="other" disabled>Other</option>
 		</select></br>
 		Call number: <input type="text" name="" id="callNo"></br>
 		Edition: <input type="text" name="" id="edition"></br>
-
+		<label for="inhouse">In-house use:</label> <input type="checkbox" name="" id="inhouse"></br>
 		<button id="printButton" onclick="renderLabel()">Print</button>
 	</form>
 	
-	<script>
+	<script>		
+
 		function printLabel() {
 			console.log("Print button clicked\nCallNo: " + document.getElementById("callNo").value);
 			window.print();
 		};
 
 		function renderLabel() {
+			if (document.getElementById("inhouse").checked) {
+				callNoText = '<div style="position: relative; top: -20px; left: 0; margin: 0 auto; font-size: 10pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>Udl&aring;nes ikke</strong></span></div> \
+					<div style="text-transform: uppercase; padding-top: 4mm; font-size: 16pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>' + document.getElementById("callNo").value.replace(" ", "</br>") +'</strong></span></div>';
+			} else {
+				callNoText = '<div style="display: inline-block; text-align: left; text-transform: uppercase; padding-top: 4mm; font-size: 16pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>' + document.getElementById("callNo").value.replace(" ", "</br>") +'</strong></span></div>';
+			};
+
 			var w = window.open();
 
 			content = '<div class="user-config" style="padding: 3mm 3mm 3mm 3mm;"> \
@@ -34,7 +42,7 @@
 						<div style="display: inline-block; text-align: center; font-size: 10pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>AU Library</strong></span><br /><span style="font-family: arial, helvetica, sans-serif;"><strong>Bartholins All&eacute;</strong></span></div> \
 						</div> \
 						<div style="text-align: center;"> \
-						<div style="display: inline-block; text-align: left; text-transform: uppercase; padding-top: 4mm; font-size: 16pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>' + document.getElementById("callNo").value.replace(" ", "</br>") +'</strong></span></div> \
+						' + callNoText + ' \
 						</div> \
 						<div style="text-align: center;"> \
 						<div style="position: fixed; bottom: 10px; transform: translate(-50%, -50%); margin: 0 auto; left: 50%; font-size: 10pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>' + document.getElementById("edition").value + '</strong></span></div> \
