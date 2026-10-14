@@ -10,7 +10,7 @@
 		Template:
 		<select name="catType" id="catTypeSelection">
 			<option value="udk">UDK</option>
-			<option value="statjur" disabled>Stat/Jur</option>
+			<option value="statjur">Stat/Jur</option>
 			<option value="dewey" disabled>Dewey</option>
 			<option value="other" disabled>Other</option>
 		</select></br>
@@ -23,6 +23,9 @@
 	<script>		
 
 		function renderLabel() {
+
+			catType = document.getElementById("catTypeSelection").value;
+
 			if (document.getElementById("inhouse").checked) {
 				callNoText = '<div style="position: relative; top: -20px; left: 0; margin: 0 auto; font-size: 10pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>Udl&aring;nes ikke</strong></span></div> \
 					<div style="text-transform: uppercase; padding-top: 4mm; font-size: 16pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>' + document.getElementById("callNo").value.replace(" ", "</br>") +'</strong></span></div>';
@@ -30,9 +33,7 @@
 				callNoText = '<div style="display: inline-block; text-align: left; text-transform: uppercase; padding-top: 4mm; font-size: 16pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>' + document.getElementById("callNo").value.replace(" ", "</br>") +'</strong></span></div>';
 			};
 
-			var w = window.open();
-
-			content = '<div class="user-config" style="padding: 3mm 3mm 3mm 3mm;"> \
+			udkContent = '<div class="user-config" style="padding: 3mm 3mm 3mm 3mm;"> \
 						<div style="text-align: right;"> \
 						<div style="display: inline-block; text-align: center; font-size: 10pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>AU Library</strong></span><br /><span style="font-family: arial, helvetica, sans-serif;"><strong>Bartholins All&eacute;</strong></span></div> \
 						</div> \
@@ -43,11 +44,30 @@
 						<div style="position: fixed; bottom: 10px; transform: translate(-50%, -50%); margin: 0 auto; left: 50%; font-size: 10pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>' + document.getElementById("edition").value + '</strong></span></div> \
 						</div> \
 						</div>';
+
+			statjurContent = '<div class="user-config" style="padding: 3mm 3mm 3mm 3mm;"> \
+							<div style="text-align: right;"> \
+							<div style="display: inline-block; text-align: center; font-size: 8pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>AU Library</strong></span><br /><span style="font-family: arial, helvetica, sans-serif;"><strong>Bartholins All&eacute;</strong></span></div> \
+							</div> \
+							<div style="text-align: center;"> \
+							<div style="display: inline-block; text-align: left; text-transform: uppercase; padding-top: 4mm; font-size: 12pt; line-height: 2;"><span style="font-family: arial, helvetica, sans-serif;"><strong>' + document.getElementById("callNo").value.replace(" ", "</br>") + '</strong></span></div> \
+							</div> \
+							<div style="text-align: center;"> \
+							<div style="position: fixed; bottom: 10px; transform: translate(-50%, -50%); margin: 0 auto; left: 50%; font-size: 10pt;"><span style="font-family: arial, helvetica, sans-serif;"><strong>' + document.getElementById("edition").value + '</strong></span></div> \
+							</div> \
+							</div>';
+			
+			if (catType == 'udk') {
+				content = udkContent;
+			} else 	if (catType == 'statjur') {
+				content = statjurContent;
+			};
+
+			var w = window.open();
 			w.document.write(content);
 			setTimeout(w.window.print(), 1000);
 			w.document.close();
-
-		}
+		};
 	</script>
 </body>
 </html>
