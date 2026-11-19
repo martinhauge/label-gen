@@ -4,6 +4,33 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title></title>
+	<style>
+		@page {
+	      size: 113mm 50mm;
+	      margin: 0;
+	    }
+
+	    @media print {
+	      body * {
+	        visibility: hidden;
+	      }
+
+	      .label,
+	      .label * {
+	        visibility: visible;
+	      }
+
+	      .label {
+	        position: absolute;
+	        left: 0;
+	        top: -2mm;
+	        width: 110mm;
+	        height: 48mm;
+	        border: none;
+	        margin: 0.15mm 0 0 0;
+	      }
+	    }
+  	</style>	
 </head>
 <body>
 	<form>
@@ -19,6 +46,7 @@
 		<label for="inhouse">In-house use:</label> <input type="checkbox" name="" id="inhouse"></br>
 		<button id="printButton" onclick="renderLabel()">Print</button>
 	</form>
+	<div class="label" id="label"></div>
 	
 	<script>		
 
@@ -63,10 +91,8 @@
 				content = statjurContent;
 			};
 
-			var w = window.open();
-			w.document.write(content);
-			setTimeout(w.window.print(), 1000);
-			w.document.close();
+			document.getElementById("label").innerHTML = content;
+			window.print();
 		};
 	</script>
 </body>
